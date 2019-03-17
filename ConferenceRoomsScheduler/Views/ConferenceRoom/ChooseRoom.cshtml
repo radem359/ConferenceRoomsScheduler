@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Choose Conference Room";
+}
+<div class="jumbotron">
+
+    <h2>@ViewBag.Title.<img align="right" width="70" height="70" src="~/Images/scheduler.png" /></h2>
+    <br/>
+    <p><strong> Here you should choose Conference Room which weekly schedule you want to open.</strong></p>
+    @using (Html.BeginForm("PerformChoosing", "ConferenceRoom", FormMethod.Post))
+    {
+    <div class="col-md-offset-2 col-md-10">
+        @Html.DropDownList("RoomNames")
+        <input type="submit" value="Open Scheduler" class="btn btn-primary btn-md" />
+    </div>
+    }
+</div>

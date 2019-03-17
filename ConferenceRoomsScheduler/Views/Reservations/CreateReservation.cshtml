@@ -1,0 +1,93 @@
+﻿@model ConferenceRoomsScheduler.ViewModels.ReservationViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add new reservation</h2>
+<h4>for Conference Room @ViewBag.ConfRoomId</h4>
+<br/> 
+<script type="text/javascript" src="~/Scripts/CreateReservation.js"></script>
+
+@using (Html.BeginForm("CreateReservation", "Reservations", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("ConfRoomId", (int)ViewBag.ConfRoomId)
+    @Html.Hidden("CreatorId", (string)ViewBag.CreatorId)
+    <h5>@TempData["Message"]</h5>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description)
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" name="Description" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StartDateAndTime)
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class='input-group date' id='datetimepicker1' >
+                        <input type='text' class="form-control" name="StartDateAndTime" />
+                        <span id="calendarStart" class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EndDateAndTime)
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class='input-group date' id='datetimepicker2'>
+                        <input type='text' class="form-control" name="EndDateAndTime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <b>Users</b>
+                    @Html.DropDownList("Users", null, htmlAttributes: new { size = "4", Multiple = "multiple", style = "width:150px;height : 200px" })
+                </div>
+                <div class="col-sm-2 btn-group-vertical">
+                    <button type="button" class="btn btn-primary btn-md" id="invite">Invite</button>
+                    <button type="button" class="btn btn-primary btn-md" id="remove">Remove</button>
+                </div>
+                <br>
+                <div class="col-sm-2">
+                    <b>Invited Users</b><br>
+                    <select id="InvitedUsers" name="InvitedUserNames" size="4" Multiple="multiple" style="width:150px;height : 200px"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+}
+<div>
+    @Html.ActionLink("Back to table", "ShowTable", "ConferenceRoom", new { roomId = ViewBag.ConfRoomId }, new { })
+</div>

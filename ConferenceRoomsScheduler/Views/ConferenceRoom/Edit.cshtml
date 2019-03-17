@@ -1,0 +1,102 @@
+﻿@model ConferenceRoomsScheduler.ViewModels.ReservationViewModel
+
+@{
+    ViewBag.Title = "Edit reservation";
+}
+
+<h2>Edit</h2>
+
+<script type="text/javascript" src="~/Scripts/EditReservation.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Reservation</h4>
+        <h5>@TempData["Message"]</h5>
+        <hr /> <br />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.Hidden("ConfRoomId", (int)ViewBag.ConfRoomId)
+        @Html.Hidden("CreatorId", (string)ViewBag.CreatorId)
+       
+       <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDateAndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-3'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                @Html.EditorFor(model => model.StartDateAndTime, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.StartDateAndTime, "", new { @class = "text-danger" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDateAndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-3'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                @Html.EditorFor(model => model.EndDateAndTime, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.EndDateAndTime, "", new { @class = "text-danger" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <b>All Users</b><br />
+                        @Html.DropDownList("Users", null, htmlAttributes: new { size = "4", Multiple = "multiple", style = "width:150px;height : 200px" })
+                    </div>
+                    <div class="col-sm-2 btn-group-vertical">
+                        <button type="button" class="btn btn-primary btn-md" id="invite">Invite</button>
+                        <button type="button" class="btn btn-primary btn-md" id="remove">Remove</button>
+                    </div>
+                    <br>
+                    <div class="col-sm-2">
+                        <b>Invited Users</b><br />
+                        @Html.DropDownList("InvitedUserNames", null, htmlAttributes: new { size = "4", Multiple = "multiple", style = "width:150px;height : 200px" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to table", "ShowTable", "ConferenceRoom", new { roomId = ViewBag.ConfRoomId }, new { })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

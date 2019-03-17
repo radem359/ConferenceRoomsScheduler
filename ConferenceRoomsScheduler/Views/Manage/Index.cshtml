@@ -1,0 +1,30 @@
+﻿@model ConferenceRoomsScheduler.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <h5>Dear @User.Identity.Name, here you can change your password.</h5>
+
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+        
+    </dl>
+</div>

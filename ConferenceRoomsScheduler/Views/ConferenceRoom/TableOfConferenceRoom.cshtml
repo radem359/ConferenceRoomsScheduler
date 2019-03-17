@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<ConferenceRoomsScheduler.Models.Reservation>
+
+<br/>
+<script type="text/javascript">
+    function filling() {
+        @foreach (var reservation in Model)
+        {
+        <text>
+        var toSpan = (@reservation.EndDateAndTime.Hour - @reservation.StartDateAndTime.Hour)*2;
+        if(@reservation.EndDateAndTime.Minute==30 && @reservation.StartDateAndTime.Minute==0){
+            toSpan+=1;
+        }else if(@reservation.EndDateAndTime.Minute==0 && @reservation.StartDateAndTime.Minute==30){
+            toSpan-=1;
+        }
+        
+        var cell = $(document.getElementById("@reservation.StartDateAndTime.ToString()")).append("<center><a title=\"Click to edit reservation\" href=\"Edit/@reservation.Id\">@reservation.Description</a>&nbsp <a href=\"Delete/@reservation.Id\"> Delete </a></center>");
+        cell.attr("rowspan", toSpan);
+        cell.attr("bgcolor","black");
+        </text>
+        }
+    }
+</script>
+<div class="jumbotron">
+    <p align="right">@Html.ActionLink("Create new reservation", "CreateReservation", "Reservations", new { confRoomId = ViewBag.ConfRoomId }, new { })</p>
+    <h3><center>Table of reservations for Conference room @ViewBag.ConfRoomId </center></h3>
+    <h4 color="red"><center>@ViewBag.Message</center></h4>
+    <table align="center" id="schedule" border="1">
+        <tr>
+            <th>Time</th>
+
+            @for (DateTime date = DateTime.Now.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek); date.DayOfWeek!=DayOfWeek.Saturday; date=date.AddDays(1))
+            {
+                <th>@date.DayOfWeek.ToString() - @date.Date.ToShortDateString()</th>
+            }
+        </tr>
+
+        @for (int timesHour = 0; timesHour < 20; timesHour++)
+        {
+            DateTime date = DateTime.Now.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek);
+            DateTime timeIndexer = new DateTime(date.Year, date.Month, date.Day, 8, 0, 0);
+            timeIndexer = timeIndexer.AddMinutes(timesHour * 30);
+            <tr>
+                @if (timeIndexer.Minute == 0)
+                {
+                    <td> @timeIndexer.Hour:00-@timeIndexer.Hour:30</td>
+                }
+                else
+                {
+                    <td> @timeIndexer.Hour:@timeIndexer.Minute-@(timeIndexer.Hour+1):00</td>
+                }
+
+                @for (int timesDay = 0; timesDay < 5; timesDay++)
+                {
+                    <td bgcolor="lightgreen" id="@timeIndexer.ToString()"> </td>
+                    timeIndexer = timeIndexer.AddDays(1);
+                }
+            </tr>
+        }
+
+    </table>
+    <script>filling();</script> 
+</div>

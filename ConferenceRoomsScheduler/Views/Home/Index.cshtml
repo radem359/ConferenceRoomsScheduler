@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+
+}
+<div class="jumbotron">
+    <br/>
+    <h1><center>Welcome to Conference Rooms Scheduler! <img width="220" height="220" src="~/Images/scheduler.png" /> </center>
+    </h1>
+    <br/>
+     @if (User.Identity.IsAuthenticated)
+     {
+         <p> <strong> Hello, @User.Identity.Name! Click on the following link: @Html.ActionLink("Open Scheduler", "ChooseRoom", "ConferenceRoom") to choose conference room. </strong></p>
+     }
+</div>

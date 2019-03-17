@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ConferenceRoomsScheduler.Models.Reservation
+
+<div class="jumbotron">
+    <h2>Error</h2>
+    <p> We are sorry, you are not able to delete or edit this reservation because you didn't create the same.</p>
+    <h4>Reservation - details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDateAndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDateAndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDateAndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDateAndTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatorId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatorId)
+        </dd>
+
+    </dl>
+    <div>
+        @Html.ActionLink("Back to table", "ShowTable", "ConferenceRoom", new { roomId = ViewBag.ConfRoomId }, new { })
+    </div> 
+</div>

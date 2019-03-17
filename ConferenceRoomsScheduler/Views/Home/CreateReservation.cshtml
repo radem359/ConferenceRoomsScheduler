@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ConferenceRoomsScheduler.Models.Reservation
+
+@using (Html.BeginForm("CreateReservation", "ConferenceRoom", FormMethod.Post))
+{
+    <h2>Start time:</h2><br>
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+            </script>
+        </div>
+    </div>
+
+    <h2>End time:</h2><br>
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker2'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker();
+            });
+            </script>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="container">
+            <br>Users:<br>
+            <div class="row">
+                <div class="col-2">
+                   @Html.DropDownList("Users", null, htmlAttributes: new { size = "4", Multiple = "multiple", style = "width:150px;height : 200px" })
+                </div>
+                <div class="col-2 btn-group-vertical">
+                    <button type="button" class="btn btn-primary btn-md" id="add">Add   </button>
+                    <button type="button" class="btn btn-primary btn-md" id="remove">Remove</button>
+                </div>
+                <br>
+                @Html.LabelFor(model => model.InvitedUsers)<br>
+                <div class="col-2">
+                    <select id="InvitedUsers" name="InvitedUsers" size="4" Multiple="multiple" style="width:150px;height : 200px"></select>
+                </div>
+            </div>
+        </div>
+        <br>
+        Description:
+        <br>
+        <div class="description">
+            <textarea name='description' id='description'></textarea><br />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-md" value="Create" />
+    </div>
+
+}
